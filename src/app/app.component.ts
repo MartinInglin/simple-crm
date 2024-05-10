@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { SidenavComponent } from './shared/sidenav/sidenav.component';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [SidenavComponent, RouterOutlet],
+  imports: [RouterOutlet, MatSidenavModule, MatIconModule, RouterModule, MatToolbarModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'simple-crm';
 }

@@ -26,7 +26,7 @@ import { Firestore, doc, setDoc } from '@angular/fire/firestore';
   styleUrl: './dialog-edit-user.component.scss',
 })
 export class DialogEditUserComponent {
-  user: User | null = null;
+  user: User = new User;
   public isLoading = false;
   public userId: string = '';
   private firestore = inject(Firestore);

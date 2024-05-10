@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -30,8 +30,9 @@ export class UserComponent {
   user: User;
   allUsers: [] = [];
   private subscription: Subscription = new Subscription();
+  private firestore = inject(Firestore)
 
-  constructor(public dialog: MatDialog, private firestore: Firestore) {
+  constructor(public dialog: MatDialog) {
     this.users$ = collectionData(this.getUsersRef(), {
       idField: 'id',
     }) as Observable<User[]>;
