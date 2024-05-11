@@ -27,6 +27,7 @@ import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 })
 export class DialogEditUserComponent {
   user: User = new User;
+  birthDate!: Date;
   public isLoading = false;
   public userId: string = '';
   private firestore = inject(Firestore);
@@ -35,6 +36,7 @@ export class DialogEditUserComponent {
 
   saveUser() {
     if (this.user) {
+      this.user.birthDate = this.birthDate.getTime();
       this.isLoading = true;
       const userDocumentRef = doc(this.firestore, 'users', this.userId);
       setDoc(userDocumentRef, this.user.toJSON()).then((result: any) => {

@@ -1,15 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UserComponent } from './user.component';
-import { Firestore, FirestoreModule } from '@angular/fire/firestore';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { of } from 'rxjs';
-import { FirebaseApp } from '@angular/fire/app';
+import { UserComponent } from './user.component';
 
 describe('UserComponent', () => {
   let component: UserComponent;
   let fixture: ComponentFixture<UserComponent>;
-  let app: FirebaseApp;
-  let firestore: Firestore;
 
   const firestoreStub = {
     collection: (name: string) => ({
@@ -17,17 +15,25 @@ describe('UserComponent', () => {
         valueChanges: () => of({ foo: 'bar' }), // Returns an observable with mock data
         set: (_d: any) => Promise.resolve(null),
       }),
-      snapshotChanges: () =>
-        of([
-          /* array of items */
-        ]),
+      snapshotChanges: () => of([ /* Mock data array */ ]),
     }),
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserComponent],
-      providers: [{ provide: Firestore, useValue: firestoreStub }],
+      imports: [UserComponent], // If UserComponent is standalone, use imports instead
+      providers: [
+        { provide: Firestore, useValue: firestoreStub },
+        provideFirebaseApp(() => initializeApp({
+          projectId: 'simple-crm-e2c5c',
+          appId: '1:488148744412:web:8e76dfa27226c50af85c19',
+          storageBucket: 'simple-crm-e2c5c.appspot.com',
+          apiKey: 'AIzaSyDxRshuMnonuLYicWhOAsHmpd3QTH6-hrc',
+          authDomain: 'simple-crm-e2c5c.firebaseapp.com',
+          messagingSenderId: '488148744412',
+        })),
+        provideFirestore(() => getFirestore()), // This should be reviewed if stub is used
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserComponent);
